@@ -1,4 +1,4 @@
-<h1 style="align:center">Welcome to Omkar&aposs blog & Projects</h1>
+<h1 style="align:center">Welcome to Omkar's blog & Projects</h1>
 
 <div style="align:center">
 			<table>
