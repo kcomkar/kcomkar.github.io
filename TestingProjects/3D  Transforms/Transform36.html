@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CSS3 3D Transforms & Transitions testsuite</title>
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta http-equiv="Content-Script-Type" content="text/javascript" />
+    <link rel="author" title="K Chandrasekhar Omkar" href="mailto:ext-omkar.chandrasekhar@nokia.com" />
+    <link rel="help" href="http://www.w3.org/TR/css3-3d-transforms/" />
+    <meta name="flags" content="animated dom HTML interact invalid paged mobile" />
+    <meta name="assert" content="To verify support for CSS3 3D Transforms on a mobile browser, having webkit-based browser engine." />
+    <style type="text/css">
+        #f1_container
+        {
+            position: relative;
+            margin: 10px auto;
+            width: 450px;
+            height: 281px;
+            z-index: 1;
+        }
+        .face.back
+        {
+            display: none;
+        }
+        #ttt
+        {
+            font-family: Arial;
+            text-align: center;
+            font-weight: bolder;
+            font-size: large;
+        }
+        #f1_container
+        {
+            -webkit-perspective: 1000;
+        }
+        #f1_card
+        {
+            width: 100%;
+            height: 100%;
+            -webkit-transform-style: preserve-3d;
+            -webkit-transition: all 1.0s linear;
+        }
+        #f1_container:click #f1_card
+        {
+            -webkit-transform: rotateY(180deg);
+            -webkit-box-shadow: -5px 5px 5px #aaa;
+            -moz-box-shadow: -5px 5px 5px #aaa;
+            box-shadow: -5px 5px 5px #aaa;
+        }
+        .face
+        {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: visible;
+        }
+        .face.back
+        {
+            display: block;
+            -webkit-transform: rotateY(180deg);
+            -webkit-box-sizing: border-box;
+            padding: 10px;
+            color: white;
+            text-align: center;
+            background-color: #aaa;
+        }
+        #p
+        {
+            background-color: Green;
+            color: Yellow;
+            font-weight: 400;
+            font-size: 110%;
+        }
+        #fl
+        {
+            background-color: Red;
+            color: Yellow;
+            font-weight: 400;
+            font-size: 110%;
+        }
+        #flipped
+        {
+            font-family: Consolas;
+            font-weight: normal;
+            color: Black;
+            font-weight: bold;
+            font-size: 110%;
+        }
+        #btn
+        {
+            border-style: outset;
+            font-family: Consolas;
+            font-weight: bolder;
+            font-size: 110%;
+        }
+        /* <!-- ######################################### --> */
+        body
+        {
+            font-family: Consolas;
+            height: 100%;
+            width: 100%;
+            max-height: 640px;
+            max-width: 320px;
+            -webkit-transition: all 1.5s ease-in-out;
+            float: left;
+            overflow: visible;
+        }
+        #passed
+        {
+            background-color: Green;
+            color: Yellow;
+            font-weight: bolder;
+        }
+        #failed
+        {
+            background-color: Red;
+            color: Yellow;
+            font-weight: bolder;
+        }
+        #assertion
+        {
+            font-weight: bolder;
+            text-decoration: underline;
+        }
+        #eval
+        {
+            font-weight: bolder;
+            text-decoration: underline;
+        }
+        #testdetails
+        {
+            font-family: Consolas;
+            color: Black;
+            font-weight: normal;
+        }
+        .highlight
+        {
+            background-color: #A9D0F5;
+        }
+        
+        .samplediv
+        {
+            border-color: Maroon;
+            border-width: medium;
+            border-style: double;
+            width: 70%;
+        }
+    </style>
+    <script type="text/javascript" language="javascript">
+        frontside = true;
+
+        function flipCard() {
+            if (frontside) {
+                document.getElementById('f1_card').setAttribute("style", "-webkit-transform: rotateY(180deg);");
+
+            }
+            else {
+                document.getElementById('f1_card').removeAttribute("style");
+
+
+            }
+            frontside = !frontside;
+        }
+    </script>
+</head>
+<body>
+    <div id="testdetails">
+        <p>
+            <span id="assertion">Assertion:</span> To verify the behaviour of <code>-webkit-backface-visibility</code>
+            when set to "<code>visible</code>".
+        </p>
+        <p>
+            <span id="eval">Evaluation Criteria: </span>You should be able to see a grey colour
+            box with some text in it. Tapping <span>
+                <input type="button" id="btn" value="Flip" onclick="flipCard();" /></span> causes
+            it do turn back & forth.
+            <ul>
+                <li><span id="passed">PASS</span> if the text in box looks to be similar to it's mirror
+                    image upon turning back. Turning front should make is visible as it was initially.
+                </li>
+                <li><span id="failed">FAIL</span> if the output is not as expected. </li>
+            </ul>
+        </p>
+    </div>
+    <!-- /*   Test specific code goes here  */ -->
+    <div id="f1_container">
+        <div id="f1_card" class="shadow">
+            <div class="front face">
+                <p style="font-family: Consolas; font-size: 160%; font-weight: bolder; text-align: justify;
+                    vertical-align: middle;">
+                    Hi, this is a transperent sheet on which this text has been written on the front-side.
+                    So, turning back would change as seen in a mirror.
+                </p>
+            </div>
+            <div class="back face center">
+            </div>
+        </div>
+    </div>
+    <div id="navigate">
+        <br />
+        <hr />
+        <a href="Transform35.html">Previous</a> | <a href="Transform37.html">Next</a>
+    </div>
+</body>
+</html>

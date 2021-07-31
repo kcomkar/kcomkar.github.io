@@ -1,0 +1,148 @@
+﻿<!DOCTYPE html>
+<html>
+<!-- Preserve-3D -->
+<head>
+    <title>CSS3 3D Transforms & Transitions testsuite</title>
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta http-equiv="Content-Script-Type" content="text/javascript" />
+    <link rel="author" title="K Chandrasekhar Omkar" href="mailto:ext-omkar.chandrasekhar@nokia.com" />
+    <link rel="help" href="http://www.w3.org/TR/css3-3d-transforms/" />
+    <meta name="flags" content="animated dom HTML interact invalid paged mobile" />
+    <meta name="assert" content="To verify support for CSS3 3D Transforms on a mobile browser, having webkit-based browser engine." />
+    <style type="text/css" media="screen">
+    #super {
+      font-family: Arial Narrow;
+      font-size: 80%;
+      max-height: 100%;
+      max-width: 100%;
+      overflow: scroll;
+    }
+    #container {
+      position: relative;
+      height: 300px;
+      width: 300px;
+      margin: 50px 100px;
+      border: 2px solid white;
+      -webkit-perspective: 500;
+    }
+#navigate
+{
+	font-family: Consolas;
+	font-weight: bold;
+}
+
+    #parent {
+      margin: 10px;
+      width: 280px;
+      height: 280px;
+      background-color: #844BCA;
+      opacity: 0.8;
+      -webkit-transform-style: preserve-3d;
+      -webkit-animation: spin 10s infinite linear;
+      vertical-align: middle;
+      text-align: center;
+    }
+    
+    @-webkit-keyframes spin {
+      from { -webkit-transform: rotateY(0); }
+      to   { -webkit-transform: rotateY(360deg); }
+    }
+    
+    #parent > div {
+      position: absolute;
+      top: 40px;
+      left: 40px;
+      width: 200px;
+      height: 200px;
+      padding: 10px;
+      -webkit-box-sizing: border-box;
+      font-family: monospace;
+      font-size: 12pt;
+    }
+
+    #parent > :first-child {
+      background-color: #49DC93;
+      -webkit-transform: translateZ(-100px) rotateY(45deg);
+    }
+
+    #parent > :last-child {
+      background-color: #FF6;
+      -webkit-transform: translateZ(50px) rotateX(20deg);
+      -webkit-transform-origin: 50% top;
+    }
+    /***************************************************************/
+        #passed
+        {
+            background-color: Green;
+            color: Yellow;
+            font-weight: bolder;
+        }
+        #failed
+        {
+            background-color: Red;
+            color: Yellow;
+            font-weight: bolder;
+        }
+        #assertion
+        {
+            font-weight: bolder;
+            text-decoration: underline;
+        }
+        #eval
+        {
+            font-weight: bolder;
+            text-decoration: underline;
+        }
+        #testdetails
+        {
+            font-family: Arial;
+            color: Black;
+            font-weight: normal;
+        }
+    /***************************************************************/
+  </style>
+    <script type="text/javascript" charset="utf-8">
+        function preserve3d() {
+            document.getElementById("parent").setAttribute("style", "-webkit-transform-style: preserve-3d;");
+        }
+
+        function dontPreserve3d() {
+            document.getElementById("parent").setAttribute("style", "-webkit-transform-style: flat;");
+        }
+    </script>
+</head>
+<body onload="preserve3d();">
+    <div id="super">
+        <div id="testdetails">
+            <p>
+                <span id="assertion">Assertion:</span> To verify the behaviour of 3d-transforms
+                when "<code>-webkit-transform-style</code>" property is set to "<code>preserve-3d</code>".
+            </p>
+            <p>
+                <span id="eval">Evaluation Criteria:</span> You should be able to see 3 planes colored
+                in Violet, Green and Yellow. Violet plane is the parent of the other two.
+                <ul>
+                    <li><span id="passed">PASS</span> if the the output is like
+                        <img src="Transform34.png" width="25%" alt="having Violet frame between the Yellow and Green. Also, the child planes in Yellow and Green should be rotated in X and Y axes with respect to the Violet plane." />
+                        , and keeps rotating.</li>
+                    <li><span id="failed">FAIL</span> if the planes aren't aligned as expected, and no rotation
+                        is seen.</li>
+                </ul>
+            </p>
+        </div>
+        <div id="container">
+            <div id="parent">
+                PARENT Plane in Violet
+                <div>
+                    CHILD Plane in Green color.
+                </div>
+                <div>
+                    CHILD Plane in Yellow color.</div>
+            </div>
+        </div>
+        <hr />
+        <div id="navigate">
+            <a href="Transform33.html">Previous</a> | <a href="Transform35.html">Next</a></div>
+    </div>
+</body>
+</html>

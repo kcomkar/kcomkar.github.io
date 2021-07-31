@@ -1,0 +1,361 @@
+<html class="no-js">
+
+<head>
+
+    <title>Test Content</title>
+
+    <style type="text/css">
+
+        .CWRTBody
+
+        {
+
+            font-family: Consolas;
+
+            font-variant: small-caps;
+
+        }
+
+        .PASS
+
+        {
+
+            background-color: Green;
+
+            color: White;
+
+            font-weight: bold;
+
+        }
+
+        .FAIL
+
+        {
+
+            background-color: Red;
+
+            color: White;
+
+            font-weight: bold;
+
+            vertical-align: middle;
+
+        }
+
+    </style>
+
+    <script type="text/javascript" src="TestScripts.js"> </script>
+
+    <script type="text/javascript">
+
+        var OutputGrid = null;
+
+ 
+
+        function initializePage() {
+
+            try {
+
+ 
+
+                OutputGrid = document.createElement("table");
+
+                OutputGrid.setAttribute("height", "100%");
+
+                OutputGrid.setAttribute("width", "100%");
+
+                OutputGrid.setAttribute("border", "2");
+
+                document.body.appendChild(OutputGrid);
+
+ 
+
+            }
+
+            catch (anymistake) {
+
+                window.alert("ERROR in initializePage()\n\n"+anymistake);
+
+                
+
+            }
+
+        }
+
+ 
+
+        function printOutput(TestName, TestResult) {
+
+            var TempRow = document.createElement("tr");
+
+            var TempCol1 = document.createElement("td");
+
+            var TempCol2 = document.createElement("td");
+
+            
+
+            TempCol1.innerHTML = TestName;
+
+            TempCol2.innerHTML = TestResult;
+
+ 
+
+            TempCol1.setAttribute("align", "left");
+
+            TempCol2.setAttribute("align", "center");
+
+ 
+
+            TempRow.appendChild(TempCol1);
+
+            TempRow.appendChild(TempCol2);
+
+            OutputGrid.appendChild(TempRow);
+
+        }
+
+ 
+
+        function performAllTests() {
+
+ 
+
+            if (Modernizr.applicationcache) {
+
+                printOutput("Application Caching", "<span class='PASS'>PASS</span>");
+
+            }
+
+            else {
+
+                printOutput("Application Caching", "<span class='FAIL'>FAIL</span>");
+
+            }
+
+ 
+
+            if (Modernizr.cssanimations) {
+
+                printOutput("CSS Animations", "<span class='PASS'>PASS</span>");
+
+            }
+
+            else {
+
+                printOutput("CSS Animations", "<span class='FAIL'>FAIL</span>");
+
+            }
+
+ 
+
+            if (Modernizr.canvas) {
+
+                printOutput("Canvas", "<span class='PASS'>PASS</span>");
+
+            }
+
+            else {
+
+                printOutput("Canvas", "<span class='FAIL'>FAIL</span>");
+
+            }
+
+ 
+
+            if (Modernizr.crosswindowmessaging) {
+
+                printOutput("Cross window messaging", "<span class='PASS'>PASS</span>");
+
+            }
+
+            else {
+
+                printOutput("Cross window messaging", "<span class='FAIL'>FAIL</span>");
+
+            }
+
+ 
+
+            if (Modernizr.websockets) {
+
+                printOutput("Web Sockets", "<span class='PASS'>PASS</span>");
+
+            }
+
+            else {
+
+                printOutput("Web Sockets", "<span class='FAIL'>FAIL</span>");
+
+            }
+
+ 
+
+            if (Modernizr.fontface) {
+
+                printOutput("Font-face", "<span class='PASS'>PASS</span>");
+
+            }
+
+            else {
+
+                printOutput("Font-face", "<span class='FAIL'>FAIL</span>");
+
+            }
+
+ 
+
+            if (Modernizr.historymanagement) {
+
+                printOutput("History Management", "<span class='PASS'>PASS</span>");
+
+            }
+
+            else {
+
+                printOutput("History Management", "<span class='FAIL'>FAIL</span>");
+
+            }
+
+ 
+
+            if (Modernizr.indexeddb) {
+
+                printOutput("Indexed database", "<span class='PASS'>PASS</span>");
+
+            }
+
+            else {
+
+                printOutput("Indexed database", "<span class='FAIL'>FAIL</span>");
+
+            }
+
+ 
+
+            if (Modernizr.websqldatabase) {
+
+                printOutput("Web SQL database", "<span class='PASS'>PASS</span>");
+
+            }
+
+            else {
+
+                printOutput("Web SQL database", "<span class='FAIL'>FAIL</span>");
+
+            }
+
+ 
+
+            if (Modernizr.multiplebgs) {
+
+                printOutput("Multiple backgrounds", "<span class='PASS'>PASS</span>");
+
+            }
+
+            else {
+
+                printOutput("Multiple backgrounds", "<span class='FAIL'>FAIL</span>");
+
+            }
+
+ 
+
+            if (Modernizr.sessionstorage) {
+
+                printOutput("Session Storage", "<span class='PASS'>PASS</span>");
+
+            }
+
+            else {
+
+                printOutput("Session Storage", "<span class='FAIL'>FAIL</span>");
+
+            }
+
+ 
+
+            if (Modernizr.geolocation) {
+
+                printOutput("Geo Location support", "<span class='PASS'>PASS</span>");
+
+            }
+
+            else {
+
+                printOutput("Geo Location support", "<span class='FAIL'>FAIL</span>");
+
+            }
+
+ 
+
+            if (Modernizr.boxshadow) {
+
+                printOutput("Box shadowing", "<span class='PASS'>PASS</span>");
+
+            }
+
+            else {
+
+                printOutput("Box shadowing", "<span class='FAIL'>FAIL</span>");
+
+            }
+
+ 
+
+            if (Modernizr.borderimage) {
+
+                printOutput("Image as border", "<span class='PASS'>PASS</span>");
+
+            }
+
+            else {
+
+                printOutput("Image as border", "<span class='FAIL'>FAIL</span>");
+
+            }
+
+ 
+
+            if (Modernizr.crosswindowmessaging) {
+
+                printOutput("Cross window messaging", "<span class='PASS'>PASS</span>");
+
+            }
+
+            else {
+
+                printOutput("Cross window messaging", "<span class='FAIL'>FAIL</span>");
+
+            }
+
+ 
+
+            if (Modernizr.csstransforms3d) {
+
+                printOutput("3D Transformations in CSS3", "<span class='PASS'>PASS</span>");
+
+            }
+
+            else {
+
+                printOutput("3D Transformations in CSS3", "<span class='FAIL'>FAIL</span>");
+
+            }
+
+ 
+
+        }
+
+    </script>
+
+</head>
+
+<body onload="initializePage(); performAllTests();" class="CWRTBody">
+
+</body>
+
+</html>
+
+ 
+
+ 

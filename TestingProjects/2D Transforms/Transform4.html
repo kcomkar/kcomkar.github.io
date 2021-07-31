@@ -1,0 +1,99 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <!-- ################################################################################################################### -->
+    <title>CSS3 2D Transforms - QtWRT 101</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta http-equiv="Content-Script-Type" content="text/javascript" />
+    <link rel="author" title="K Chandrasekhar Omkar" href="mailto:ext-omkar.chandrasekhar@nokia.com" />
+    <link rel="help" href="http://www.w3.org/TR/css3-2d-transforms/" />
+    <link rel="Index" type="text/html" href="index.html" />
+    <meta name="flags" content="animated dom HTML interact invalid paged mobile" />
+    <meta name="assert" content="To verify support for CSS3 2D Transforms on a mobile browser, having webkit-based browser engine." />
+    <!-- ################################################################################################################### -->
+    <script type="text/javascript" language="javascript" src="scripts/testscripts.js"></script>
+    <link rel="stylesheet" type="text/css" href="styles/testheaders.css" />
+    <!-- ################################################################################################################### -->
+    <style type="text/css">
+        /* 
+        <!-- 
+                This style sections contains only test-specific content. All the common style sheets are contained in "styles/testheaders.css"
+        --> 
+        */ 
+        .transformReferenceDiv
+        {
+            margin: 1em 1em 1em 1em;
+            padding: 0.5em 0.5em 0.5em 0.5em;
+            background-color: #09C;
+            -webkit-transform-style: preserve-3d;
+            -webkit-perspective: 20;
+        }
+        
+        .noTransformDiv
+        {
+            margin: 1.5em 1em 1em 1.5em;
+            padding: 0.7em 0.7em 0.7em 0.7em;
+            border-color: Maroon;
+            border-width: medium;
+            border-style: double;
+            width: 40%;
+            background-color: #FCF;
+            -webkit-transform: none;
+            -webkit-transition: all 0.5s ease-in-out;
+        }
+        
+        .transformedDiv
+        {
+            margin: 1.5em 1em 1em 1.5em;
+            padding: 0.7em 0.7em 0.7em 0.7em;
+            border-color: Maroon;
+            border-width: medium;
+            border-style: double;
+            width: 40%;
+            background-color: #FCF;
+            -webkit-transform: RotateY(180deg);
+            -webkit-transition: all 1.5s ease-in-out;
+        }
+    </style>
+    <script type="text/javascript" language="javascript">
+        /*
+            <!--
+                This script sections contains only test-specific content. All the common scripts are contained in "styles/testscripts.js"
+            --> 
+        */
+    </script>
+    
+</head>
+<body>
+    <div id="testdetails">
+        <div>
+            <span id="assertion">Assertion:</span> To verify if "<code>RotateY()</code>" transforms elements with reference to Y-Axis as expected.
+        </div>
+        <div>
+            <span id="eval">Evaluation Criteria:</span> 
+            Tapping 
+            <!-- You may uncomment the next comment to make a button visible inline to the assertion -->
+            <span>
+                <input type="button" id="transformBtn" value="Transform" onclick="applyTransform();" />
+            </span>
+             applies transform on Pink box below.
+            <!-- PASS AND FAIL CRITERIA ARE IN THE LIST BELOW -->
+            <ul>
+                <li><span id="passed">PASS</span> if the box rotates <span class="highlighted">horizontally</span> on <span class="highlight">transform</span> such that text looks like in mirror, and rotates <span class="highlighted">horizontally</span> upon <span class="highlight">(Un)transform</span>.</li>
+                <li><span id="failed">FAIL</span> if the output is not as expected.</li>
+            </ul>
+        </div>
+        <hr />
+    </div>
+    <!-- PLACE TEST CONTENT FROM HERE -->
+    <div id="testarea" class="noTransformDiv">
+        Test area for <code>RotateY()</code>
+    </div>
+    <div id="navigation">
+        <table id="navTable">
+            <tr><td id="previous"><a href="Transform3.html">Previous</a></td><td id="next"><a href="Transform5.html">Next</a></td></tr>
+        </table>
+    </div>
+</body>
+</html>

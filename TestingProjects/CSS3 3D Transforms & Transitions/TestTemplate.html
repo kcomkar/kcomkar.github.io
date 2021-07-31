@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CSS3 3D Transforms & Transitions testsuite</title>
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta http-equiv="Content-Script-Type" content="text/javascript" />
+    <link rel="author" title="K Chandrasekhar Omkar" href="mailto:ext-omkar.chandrasekhar@nokia.com" />
+    <link rel="help" href="http://www.w3.org/TR/css3-3d-transforms/" />
+    <meta name="flags" content="animated dom HTML interact invalid paged mobile" />
+    <meta name="assert" content="To verify support for CSS3 3D Transforms on a mobile browser, having webkit-based browser engine." />
+    <style type="text/css">
+        body
+        {
+            font-family: Consolas;
+            height: 100%;
+            width: 100%;
+            max-height: 640px;
+            max-width: 320px;
+            -webkit-transition: all 1.5s ease-in-out;
+            float: left;
+            overflow: visible;
+        }
+        #passed
+        {
+            background-color: Green;
+            color: Yellow;
+            font-weight: bolder;
+        }
+        #failed
+        {
+            background-color: Red;
+            color: Yellow;
+            font-weight: bolder;
+        }
+        #assertion
+        {
+            font-weight: bolder;
+            text-decoration: underline;
+        }
+        #eval
+        {
+            font-weight: bolder;
+            text-decoration: underline;
+        }
+        #testdetails
+        {
+            font-family: Consolas;
+            color: Black;
+            font-weight: normal;
+        }
+        .highlight
+        {
+            background-color: #A9D0F5;
+        }
+        
+        .samplediv
+        {
+            border-color: Maroon;
+            border-width: medium;
+            border-style: double;
+            width: 70%;
+        }
+    </style>
+    <script type="text/javascript" language="javascript">
+        /* JAVASCRIPT TO BE KEPT HERE */
+    </script>
+</head>
+<body>
+    <div id="testdetails">
+        <p>
+            <span id="assertion">Assertion:</span> TEXT <code>-WHICH-WEBKIT-PROPERTY</code> SOME TEXT.
+        </p>
+        <p>
+            <span id="eval">Evaluation Criteria: </span>SAMPLE TEXT FOR EVALUATION
+            <ul>
+                <li><span id="passed">PASS</span> if the output is similar to 
+                <span>
+                    <img src="EXPECTED_SCREEN.PNG" width="50%" alt="ALTERNATE TEXT" />
+                </span> 
+                CONTINUE
+                </li>
+                <li><span id="failed">FAIL</span> if the output is not as expected. </li>
+            </ul>
+        </p>
+    </div>
+    <!-- /*   Test specific code goes here  */ -->
+    <div id="testarea" class="samplediv">
+        test area div
+    </div>
+    <div id="navigate">
+    <br /><hr />
+        <a href="">Previous</a> | <a href="">Next</a>
+        
+    </div>
+</body>
+</html>

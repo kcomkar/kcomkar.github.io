@@ -1,0 +1,82 @@
+body
+{
+    font-family: Consolas;
+    font-size: 80%;
+    margin: 3% 3% 3% 3%;
+    text-align: center;
+    direction: 
+}
+.host
+{
+    border: thin black solid;
+    display: block;
+    width: 500px; 
+    height: 300px;
+    position: relative;
+}
+img
+{
+    behaviour: url(iepngfix.htc);
+}
+#prgBar
+{
+    display: inline-block;
+    background-color: Gray;
+    color: Maroon;
+    height: 2em;
+    vertical-align: middle;
+}
+div
+{
+    position: relative;
+    overflow: hidden;
+}
+/*#wpfeHost {display: none;}
+#flashHost {display: none;}*/
+#dhtml_fps
+{
+    width: 50px;
+    padding: 5px;
+    z-index: 1000;
+}
+#dhtml_ball_0
+{
+    z-index: 0;
+}
+span
+{
+    
+    /*padding: 2px;
+    margin: 2px;
+    background-color: #ddddff;
+    vertical-align: middle;*/
+    display: inline;
+    
+}
+p
+{
+    
+    padding: 8px;
+    margin: 2px;
+    display: block;
+    text-align: center;
+}
+
+#subject
+{
+    position: absolute;
+    width: 52px;
+    height: 52px;
+    top: 124px;
+    left: 224px;
+}
+#demoControls
+{
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+#ddList
+{
+    display: none;
+    visibility: hidden;
+}

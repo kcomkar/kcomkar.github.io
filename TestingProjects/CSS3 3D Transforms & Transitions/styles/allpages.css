@@ -1,0 +1,71 @@
+body
+{
+  font-family: Consolas;
+  font-size: 100%;
+  font-variant: small-caps;
+  text-align: center;
+  vertical-align: middle;
+  color: Green;
+  font-weight: 200;
+  overflow: scroll;
+}
+
+div
+{
+  font-variant: normal;
+}
+
+
+thead tr
+{
+  background-color: Black;
+  color: White;
+  text-align: center;
+  vertical-align: middle;
+}
+
+thead tr:hover
+{
+  color: Black;
+  background-color: Gray;
+  padding: 2px 4px 2px 4px;
+  border: 2px double Maroon;
+}
+
+tfoot tr
+{
+  background-color: Black;
+  color: Silver;
+  text-align: center;
+  vertical-align: middle;
+  font-variant: normal;
+}
+tfoot tr:hover
+{
+  font-variant: small-caps;
+  background-color: White;
+  color: black;
+  text-align: center;
+  padding: 2px 4px 2px 4px;
+  border: 2px double Maroon;
+}
+
+table tbody tr td:hover
+{
+  background-color: #F6CECE;
+  color: #8A0808;
+  font-size: 100%;
+  font-weight: 400;
+  padding: 2px 4px 2px 4px;
+  border: 2px double Red;
+}
+
+a
+{
+  color: inherit;
+}
+a:hover
+{
+  color: #8A0808;
+}
+

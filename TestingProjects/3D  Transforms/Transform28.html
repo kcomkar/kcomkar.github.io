@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CSS3 3D Transforms & Transitions testsuite</title>
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta http-equiv="Content-Script-Type" content="text/javascript" />
+    <link rel="author" title="K Chandrasekhar Omkar" href="mailto:ext-omkar.chandrasekhar@nokia.com" />
+    <link rel="help" href="http://www.w3.org/TR/css3-3d-transforms/" />
+    <meta name="flags" content="animated dom HTML interact invalid paged mobile" />
+    <meta name="assert" content="To verify support for CSS3 3D Transforms on a mobile browser, having webkit-based browser engine." />
+    <style type="text/css">
+        body
+        {
+            font-family: Consolas;
+            height: 100%;
+            width: 100%;
+            max-height: 640px;
+            max-width: 320px;
+        }
+        #passed
+        {
+            background-color: Green;
+            color: Yellow;
+            font-weight: bolder;
+        }
+        #failed
+        {
+            background-color: Red;
+            color: Yellow;
+            font-weight: bolder;
+        }
+        #assertion
+        {
+            font-weight: bolder;
+            text-decoration: underline;
+        }
+        #eval
+        {
+            font-weight: bolder;
+            text-decoration: underline;
+        }
+        #testdetails
+        {
+            font-family: Consolas;
+            color: Black;
+            font-weight: normal;
+        }
+        
+        
+        #innerone
+        {
+            border-color: Maroon;
+            border-width: medium;
+            border-style: double;
+            width: 70%;
+            -webkit-transform: RotateX(16deg);
+            -webkit-transition: all 1.5s ease-in-out;
+        }
+        
+        .HasPerspective
+        {
+            border-color: Maroon;
+            border-width: thick;
+            border-style: outset;
+            width: 300px;
+            -webkit-perspective: 60;
+            -webkit-transition: all 1.5s ease-in-out;
+        }
+        
+        .NoPerspective
+        {
+            border-color: Maroon;
+            border-width: thick;
+            border-style: ridge;
+            width: 300px;
+            -webkit-perspective: none;
+            -webkit-transition: all 1.5s ease-in-out;
+        }
+    </style>
+    <script type="text/javascript" language="javascript">
+        var hasPerspective = false;
+        function alterPerspective() {
+            if (hasPerspective) {
+                document.getElementById("outerone").className = "NoPerspective";
+                document.getElementById("outeronelable").innerHTML = "<code>-webkit-perspective</code> is not present";
+            }
+            else {
+                document.getElementById("outerone").className = "HasPerspective";
+                document.getElementById("outeronelable").innerHTML = "<code>-webkit-perspective</code> is set to 200";
+            }
+            hasPerspective = !hasPerspective;
+        }
+    </script>
+</head>
+<body>
+    <div id="testdetails">
+        <p>
+            <span id="assertion">Assertion:</span> When a parent has <code>-webkit-perspective</code>
+            property set to a valid value, child transformation occurs in 3D. Else, child transforms
+            with no 3D effect.
+        </p>
+        <p>
+            <span id="eval">Evaluation Criteria: </span>Tap <span>
+                <input type="button" id="btn" value="Alter Perspective" onclick="alterPerspective();" /></span>
+            button to set webkit perspective to 200.
+            <ul>
+                <li><span id="passed">PASS</span> if the output is similar to <span>
+                    <img src="Transform28.png" width="80%" alt="the child element looks to be rotated on X-axis slightly appearing as if it is slanting in 3D Space." /></span>
+                    when parent has webkit perspective set to 200.</li>
+                <li><span id="failed">FAIL</span> if the output is not as expected, when the parent
+                    has webkit perspective set to 200.</li>
+            </ul>
+        </p>
+    </div>
+    <div id="outerone">
+        <span id="outeronelable"><code>-webkit-perspective</code> is not present</span>
+        <div id="innerone">
+            I am trying to rotate.
+        </div>
+    </div>
+    <br />
+    <hr />
+    <div id="navigate">
+        <a href="Transform27.html">Previous</a> | <a href="Transform29.html">Next</a>
+    </div>
+</body>
+</html>

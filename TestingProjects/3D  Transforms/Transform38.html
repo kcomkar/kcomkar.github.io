@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CSS3 3D Transforms & Transitions testsuite</title>
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta http-equiv="Content-Script-Type" content="text/javascript" />
+    <link rel="author" title="K Chandrasekhar Omkar" href="mailto:ext-omkar.chandrasekhar@nokia.com" />
+    <link rel="help" href="http://www.w3.org/TR/css3-3d-transforms/" />
+    <meta name="flags" content="animated dom HTML interact invalid paged mobile" />
+    <meta name="assert" content="To verify support for CSS3 3D Transforms on a mobile browser, having webkit-based browser engine." />
+    <style type="text/css">
+        .perspective
+        {
+            font-size: 150%;
+            margin: 6em auto;
+            width: 6em;
+            -webkit-perspective: 500;
+        }
+        .three-d
+        {
+            height: 6em;
+            width: 6em;
+            text-align: center;
+            background-color: #ccc;
+            -webkit-transform-style: preserve-3d;
+        }
+        #raised
+        {
+            -webkit-transform: translateZ(6em);
+            background-color: #aaa;
+        }
+        #bounce
+        {
+            -webkit-transform: translateZ(2em);
+            background-color: #999;
+        }
+        #perspective div
+        {
+            padding: 0.5em;
+        }
+        .style1
+        {
+            text-decoration: underline;
+            font-weight: normal;
+        }
+        .style2
+        {
+            font-weight: normal;
+        }
+        #p
+        {
+            background-color: Green;
+            color: Yellow;
+            font-weight: bolder;
+        }
+        #f
+        {
+            background-color: Red;
+            color: Yellow;
+            font-weight: bolder;
+        }
+        #Explanation
+        {
+            font-family: Arial Narrow;
+            color: Black;
+            font-weight: normal;
+        }
+        /* <!-- ################# -->*/
+        body
+        {
+            font-family: Consolas;
+            height: 100%;
+            width: 100%;
+            max-height: 640px;
+            max-width: 320px;
+            -webkit-transition: all 1.5s ease-in-out;
+            float: left;
+            overflow: visible;
+        }
+        #passed
+        {
+            background-color: Green;
+            color: Yellow;
+            font-weight: bolder;
+        }
+        #failed
+        {
+            background-color: Red;
+            color: Yellow;
+            font-weight: bolder;
+        }
+        #assertion
+        {
+            font-weight: bolder;
+            text-decoration: underline;
+        }
+        #eval
+        {
+            font-weight: bolder;
+            text-decoration: underline;
+        }
+        #testdetails
+        {
+            font-family: Consolas;
+            color: Black;
+            font-weight: normal;
+        }
+        .highlight
+        {
+            background-color: #A9D0F5;
+        }
+        
+        .samplediv
+        {
+            border-color: Maroon;
+            border-width: medium;
+            border-style: double;
+            width: 70%;
+        }
+    </style>
+    <script type="text/javascript" language="javascript" src="prototype.js"></script>
+    <script type="text/javascript" language="javascript">
+        var interval = setInterval("rotator()", 20);
+        var count = 0;
+        var distance = 2;
+        var distanceIncrement = true;
+        function rotator() {
+            $('rotator').style.webkitTransform = "rotateY(" + count + "deg)";
+            $('rotator').style.webkitTransform = "rotateY(" + 20 + "deg)";
+            $('bounce').style.webkitTransform = "translateZ(" + distance / 10 + "em)";
+            if (count == 359) {
+                count = 0;
+            } else {
+                count++;
+            }
+            if (distanceIncrement) {
+                distance++;
+            } else {
+                distance--;
+            }
+            if (distance == 100 || distance == 1) {
+                distanceIncrement = !distanceIncrement;
+            }
+        }
+    </script>
+</head>
+<body>
+    <div id="testdetails">
+        <p>
+            <span id="assertion">Assertion:</span>To verify the functionality of <code>z-index</code>,
+            <code>-webkit-perspective</code>, & <code>TranslateZ(), Rotate()</code> transforms
+            when used in a combination.
+        </p>
+        <p>
+            <span id="eval">Evaluation Criteria: </span>You should be able to see a three boxes
+            in grey colour with some text describing their position.
+            <ul>
+                <li><span id="passed">PASS</span> the test, if you find the font-size in second static frame
+                    larger than the first static frame. The third frame moving front and back should
+                    have it's font-size decreasing while it moves back, and increasing while it comes
+                    front. </li>
+                <li><span id="failed">FAIL</span> if the output is not as expected. </li>
+            </ul>
+        </p>
+    </div>
+    <!-- /*   Test specific code goes here  */ -->
+    <div id="wrapper">
+        <div id="experiment">
+            <div id="perspective" class="perspective">
+                <div class="three-d" id="rotator" style="-webkit-transform: rotateX(0 deg);">
+                    First Static Frame
+                    <div id="raised">
+                        Second Static Frame
+                    </div>
+                    <div id="bounce">
+                        Bouncing frame
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="navigate">
+        <br />
+        <hr />
+        <a href="Transform37.html">Previous</a> | <a href="Transform39.html">Next</a>
+    </div>
+</body>
+</html>

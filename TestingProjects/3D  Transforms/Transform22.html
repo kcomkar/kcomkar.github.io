@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CSS3 3D Transforms & Transitions testsuite</title>
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta http-equiv="Content-Script-Type" content="text/javascript" />
+    <link rel="author" title="K Chandrasekhar Omkar" href="mailto:ext-omkar.chandrasekhar@nokia.com" />
+    <link rel="help" href="http://www.w3.org/TR/css3-3d-transforms/" />
+    <meta name="flags" content="animated dom HTML interact invalid paged mobile" />
+    <meta name="assert" content="To verify support for CSS3 3D Transforms on a mobile browser, having webkit-based browser engine." />
+    <style type="text/css">
+        body
+        {
+            font-family: Consolas;
+            height: 100%;
+            width: 100%;
+            max-height: 640px;
+            max-width: 320px;
+            -webkit-transition: all 1.5s ease-in-out;
+            float: none;
+            overflow: scroll;
+        }
+        #passed
+        {
+            background-color: Green;
+            color: Yellow;
+            font-weight: bolder;
+        }
+        #failed
+        {
+            background-color: Red;
+            color: Yellow;
+            font-weight: bolder;
+        }
+        #assertion
+        {
+            font-weight: bolder;
+            text-decoration: underline;
+        }
+        #eval
+        {
+            font-weight: bolder;
+            text-decoration: underline;
+        }
+        #testdetails
+        {
+            font-family: Consolas;
+            color: Black;
+            font-weight: normal;
+        }
+        .highlight
+        {
+            background-color: #A9D0F5;
+        }
+        .highlighted
+        {
+            font-size: 110%;
+            font-variant: small-caps;
+            font-weight: bolder;
+            text-decoration: underline;
+        }
+        
+        #tempdiv
+        {
+            -webkit-transform: rotatex(20deg) rotatey(40deg);
+            -webkit-perspective: 200;
+            -webkit-transform-style: preserve-3d;
+            background-color: inherit;
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+            padding: 1em 1em 1em 1em;
+        }
+        .samplediv
+        {
+            border-color: Maroon;
+            border-width: medium;
+            border-style: double;
+            padding: 1em 1em 1em 1em;
+            width: 40%;
+            background: #A9D0FF;
+            -webkit-transform: none;
+            -webkit-transition: all 1.5s ease-in-out;
+        }
+        
+        .translatedDiv
+        {
+            border-color: Maroon;
+            border-width: medium;
+            border-style: double;
+            padding: 1em 1em 1em 1em;
+            width: 40%;
+            background: #A9D0FF;
+            -webkit-transform: rotate3d(10, 10, 20, 90deg);
+            -webkit-transition: all 1.5s ease-in-out;
+        }
+    </style>
+    <script type="text/javascript" language="javascript">
+        var translated = false;
+        function causeTranslate() {
+            if (!translated) {
+                document.getElementById("testarea").className = "translatedDiv";
+                document.getElementById("btn").value = "(Un)Rotate";
+            }
+            else {
+                document.getElementById("testarea").className = "samplediv";
+                document.getElementById("btn").value = "Rotate";
+            }
+            translated = !translated;
+        }
+    </script>
+</head>
+<body>
+    <div id="testdetails">
+        <p>
+            <span id="assertion">Assertion:</span> To verify the behaviour of "Rotate3d()" as
+            <code>-webkit-transform</code>.
+        </p>
+        <p>
+            <span id="eval">Evaluation Criteria: </span>Tap on <span>
+                <input type="button" id="btn" value="Rotate" onclick="causeTranslate();" /></span>
+            to make the box turn.
+            <ul>
+                <li><span id="passed">PASS</span> if "<span class="highlight">Rotate</span>" causes
+                    box to look like <span>
+                        <img src="Transform22.png" alt="Transform22.png file not found" /></span> like
+                    <span class="highlighted">Inverted</span> ; upon "<span class="highlight">(Un)Rotate</span>"
+                    it returns back to initial position. </li>
+                <li><span id="failed">FAIL</span> if the output is not as expected.</li>
+            </ul>
+        </p>
+    </div>
+    <!-- /*   Test specific code goes here  */ -->
+    <div id="tempdiv">
+        <div id="testarea" class="samplediv">
+            Test Area of Rotate3d()
+        </div>
+    </div>
+    <div id="navigate">
+        <br />
+        <hr />
+        <a href="Transform21.html">Previous</a> | <a href="Transform23.html">Next</a>
+    </div>
+</body>
+</html>

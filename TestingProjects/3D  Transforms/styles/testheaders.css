@@ -1,0 +1,33 @@
+body
+{
+    font-family: Consolas;
+    font-size: 110%;
+}
+#passed
+{
+    background-color: Green;
+    color: Yellow;
+    font-weight: bolder;
+}
+#failed
+{
+    background-color: Red;
+    color: Yellow;
+    font-weight: bolder;
+}
+#assertion
+{
+    font-weight: bolder;
+    text-decoration: underline;
+}
+#eval
+{
+    font-weight: bolder;
+    text-decoration: underline;
+}
+#testdetails
+{
+    font-family: Consolas;
+    color: Black;
+    font-weight: normal;
+}

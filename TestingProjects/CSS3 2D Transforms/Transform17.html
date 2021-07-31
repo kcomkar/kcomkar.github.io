@@ -1,0 +1,262 @@
+<!doctype HTML />
+<html>
+<head>
+    <title>CSS 3D Transforms & Transitions</title>
+    <style type="text/css">
+        body
+        {
+            font-family: Consolas, monospace;
+            height: 100%;
+            width: 100%;
+            max-height: 640px;
+            max-width: 320px;
+            -webkit-transition: all 3.5s ease-in-out;
+            float: none;
+            overflow: scroll;
+        }
+        #navigate
+        {
+            font-family: Consolas;
+            font-weight: bolder;
+        }
+        table
+        {
+            font-family: Consolas;
+            font-variant: small-caps;
+            font-size: large;
+            color: Blue;
+            font-weight: bolder;
+        }
+        #styleCode
+        {
+            font-family: Courier New;
+            font-variant: normal;
+            font-size: small;
+            color: Green;
+        }
+        
+        #testArena
+        {
+            color: Blue;
+            border-width: medium;
+            border-style: double;
+            display: table-cell;
+            min-height: 20%;
+            min-width: 20%;
+            height: 20%;
+            width: 20%;
+            max-height: 25%;
+            max-width: 25%;
+        }
+        #navigation
+        {
+            display: table;
+            text-align: justify;
+            vertical-align: bottom;
+            width: 90%;
+            font-family: Consolas, Monospace;
+            background-color: InfoBackground;
+            margin-top: 5%;
+            padding-top: 10%;
+        }
+        #navTable
+        {
+            width: 100%;
+            font-size: larger;
+        }
+        #previous
+        {
+            width: 50%;
+            text-align: left;
+            border-right-width: medium;
+            border-right-color: Olive;
+            border-right-style: solid;
+        }
+        #next
+        {
+            width: 50%;
+            text-align: right;
+            border-left-width: medium;
+            border-left-color: Olive;
+            border-left-style: solid;
+        }
+    </style>
+    <script type="text/javascript">
+        function displayOutput() {
+            var fixed = "border-color:Blue; border-width:medium; border-style: double; max-height: 20%; max-width: 20%;  min-height: 20%; min-width: 20%;  height: 20%; width: 20%; -webkit-transition:all 2.0s linear; ";
+            var result = "-webkit-transform-origin: ";
+
+            //########################################Top X
+            if (document.getElementById("topxr1").checked == true) {
+                var per = (parseInt(document.getElementById("topxslide").value) / 600) * 100;
+                per = parseInt(per + "");
+                result += per + "% ";
+                //result += document.getElementById("topxslide").value + " ";
+
+            }
+            else if (document.getElementById("topxr2").checked == true) {
+                result += document.getElementById("topxcombo").value + " ";
+            }
+
+            //########################################Top Y 
+            if (document.getElementById("topyr1").checked == true) {
+                var per = (parseInt(document.getElementById("topyslide").value) / 600) * 100;
+                per = parseInt(per + "");
+                result += per + "% ";
+                //result += document.getElementById("topyslide").value + " ";
+            }
+            else if (document.getElementById("topyr2").checked == true) {
+                result += document.getElementById("topycombo").value + " ";
+            }
+
+            /*########################################Top Z
+            if (document.getElementById("topzr1").checked == true) {
+            var per = (parseInt(document.getElementById("topzslide").value) / 600) * 100;
+            per = parseInt(per + "");
+            result += per + "% ";
+            //result += document.getElementById("topzslide").value + " ";
+            }
+            else if (document.getElementById("topzr2").checked == true) {
+            result += document.getElementById("topzcombo").value + " ";
+            }*/
+            result = result + ";";
+            result += " -webkit-transform: rotate(" + document.getElementById("rotate").value + "deg);";
+
+            document.getElementById("testArena").setAttribute("style", fixed + " " + result);
+            document.getElementById("styleCode").innerHTML = result;
+
+        }
+    </script>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr style="background-color: Aqua; color: Maroon; font-size: x-large; font-weight: 300;
+                text-align: center; vertical-align: middle;">
+                <td>
+                    Axis
+                </td>
+                <td>
+                    Value in percentage
+                </td>
+                <td>
+                    Value in words
+                </td>
+            </tr>
+        </thead>
+        <tr>
+            <td align="right">
+                X-Axis
+            </td>
+            <td>
+                <input type="radio" name="topx" id="topxr1" value="slide" checked="checked" />
+                <input type="range" min="0" max="600" value="0" id="topxslide" onfocus="document.getElementById('topxr1').checked=true;"
+                    onclick="document.getElementById('topxr1').checked=true;" />
+            </td>
+            <td>
+                <input type="radio" name="topx" id="topxr2" value="combo" />
+                <select id="topxcombo" onfocus="document.getElementById('topxr2').checked=true;"
+                    onclick="document.getElementById('topxr2').checked=true;">
+                    <option name="two" value="center">Center</option>
+                    <option name="four" value="left">Left</option>
+                    <option name="five" value="right">Right</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td align="right">
+                Y-Axis
+            </td>
+            <td>
+                <input type="radio" name="topy" id="topyr1" value="slide" checked="checked" />
+                <input type="range" min="0" max="600" value="0" id="topyslide" onclick="document.getElementById('topyr1').checked=true;"
+                    onfocus="document.getElementById('topyr1').checked=true;" />
+            </td>
+            <td>
+                <input type="radio" name="topy" id="topyr2" value="combo" />
+                <select id="topycombo" onclick="document.getElementById('topyr2').checked=true;"
+                    onfocus="document.getElementById('topyr2').checked=true;">
+                    <option name="one" value="top">Top</option>
+                    <option name="two" value="center">Center</option>
+                    <option name="three" value="bottom">Bottom</option>
+                </select>
+            </td>
+        </tr>
+        <!--
+        <tr>
+            <td align="right">
+                Z-Axis
+            </td>
+            <td>
+                <input type="radio" name="topz" id="topzr1" value="slide" disabled="disabled" />
+                <input type="range" min="0" max="600" value="0" id="topzslide" onclick="document.getElementById('topzr1').checked=true;"
+                  onfocus="document.getElementById('topzr1').checked=true;" disabled="disabled" />
+            </td>
+            <td>
+                <input type="radio" name="topz" id="topzr2" value="combo" checked="checked" />
+                <select id="topzcombo" onclick="document.getElementById('topzr2').checked=true;"
+                    onfocus="document.getElementById('topzr2').checked=true;">
+                    <option name="one" value="top">Top</option>
+                    <option name="two" value="center">Center</option>
+                    <option name="three" value="bottom">Bottom</option>
+                    <option name="four" value="left">Left</option>
+                    <option name="five" value="right">Right</option>
+                </select>
+            </td>
+        </tr>
+        -->
+        <tr>
+            <td colspan="3">
+                <hr />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Angle to be rotated:
+            </td>
+            <td colspan="2">
+                <input type="range" min="-360" max="360" value="0" id="rotate" style="width: 100%;" />
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3" align="justify">
+                <input type="button" onclick="displayOutput()" value="Change Style" style="font-family: Consolas;
+                    font-size: 130%; font-variant: small-caps; height: 100%; width: 100%;" />
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <div id="styleCode">
+                    &nbsp
+                </div>
+                <hr />
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3" align="center">
+                <div id="testArena" align="center">
+                    <img src="Transform17.png" alt="Could not display banana here as Transform17.png is missing "
+                        id="banana" height="50%" width="50%" /><br />
+                    <span style="font-family: 'Century Gothic'; font-weight: bolder; color: #FF0000;">-Transform-Origin
+                        Tests</span>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <br />
+    <br />
+    <br />
+    <div id="navigation">
+        <table id="navTable">
+            <tr>
+                <td id="previous">
+                    <a href="Transform16.html">Previous</a>
+                </td>
+                <td id="next">
+                    <a href="Transform24.html">Next</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

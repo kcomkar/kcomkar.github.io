@@ -1,0 +1,130 @@
+<html>
+<head>
+    <title>CSS3 3D Transforms & Transitions testsuite</title>
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta http-equiv="Content-Script-Type" content="text/javascript" />
+    <link rel="author" title="K Chandrasekhar Omkar" href="mailto:ext-omkar.chandrasekhar@nokia.com" />
+    <link rel="help" href="http://www.w3.org/TR/css3-3d-transforms/" />
+    <meta name="flags" content="animated dom HTML interact invalid paged mobile" />
+    <meta name="assert" content="To verify support for CSS3 3D Transforms on a mobile browser, having webkit-based browser engine." />
+    <style type="text/css">
+        body
+        {
+            font-family: Consolas;
+            font-size: x-large;
+            font-weight: bolder;
+            font-variant: small-caps;
+        }
+        #container
+        {
+            position: relative;
+            height: 300px;
+            width: 300px;
+            margin: 50px 100px;
+            border: 2px solid blue;
+            font-variant: normal;
+            -webkit-perspective: 500;
+        }
+        #navigate
+        {
+            font-family: Consolas;
+            font-weight: bold;
+        }
+        
+        #container > div
+        {
+            position: absolute;
+            margin: 10px;
+            width: 280px;
+            height: 140px;
+            padding: 20px;
+            font-variant: normal;
+            font-size: 12pt;
+            border: 1px solid black;
+            -webkit-box-sizing: border-box;
+        }
+        
+        #container > :first-child
+        {
+            background-color: #49DC93;
+            -webkit-transform: rotateY(30deg);
+        }
+        
+        #container > :last-child
+        {
+            top: 140px;
+            background-color: #FF6;
+            -webkit-transform: rotateX(30deg);
+        }
+        
+        #controls
+        {
+            margin: 50px 100px;
+            width: 300px;
+            text-align: right;
+        }
+        
+        #controls > input
+        {
+            width: 100%;
+        }
+    </style>
+    <script type="text/javascript" charset="utf-8">
+        function updatePerpective(value) {
+            document.getElementById('container').style.webkitPerspective = value;
+            document.getElementById('perspective-value').innerText = value;
+        }
+
+        function setPerspectiveOrigin(event) {
+            var container = document.getElementById('container');
+
+            var offsetX = event.pageX - container.offsetLeft;
+            var offsetY = event.pageY - container.offsetTop;
+
+            var originStyle = (100 * offsetX / container.offsetWidth) + '% ' + (100 * offsetY / container.offsetHeight) + '%';
+            container.style.webkitPerspectiveOrigin = originStyle;
+        }
+
+        window.addEventListener('load', function () {
+            var container = document.getElementById('container');
+            container.addEventListener('mousemove', setPerspectiveOrigin, false);
+            container.addEventListener('mouseout', function () {
+                container.style.webkitPerspectiveOrigin = '50% 50%';
+            }, false);
+            updatePerpective(0)
+        }, false);
+    </script>
+</head>
+<body>
+    <div id="controls">
+        <input type="range" min="0" max="5000" value="0" onchange="updatePerpective(this.value)"
+            align="top" />
+        <br />
+        <span>Current perspective:</span> <span id="perspective-value"></span>
+    </div>
+    <div id="container" align="center">
+        <div>
+            -webkit-transform: rotateY(45deg)</div>
+        <div>
+            -webkit-transform: rotateX(45deg)</div>
+    </div>
+    <div>
+        <p>
+            Perspective</p>
+        <p>
+            <ul>
+                <li>Drag the slider to change the perspective origin.</li>
+                <li>Two boxes are rendered accordingly by applying "ROTATE" transform in X and Y directions.</li>
+                <li style="color: Red; text-decoration: underline overline;">It's highly recommended
+                    to not decrease perspective below 210 as this may cause controls to overlap.</li>
+            </ul>
+        </p>
+    </div>
+    <br />
+    <br />
+    <br />
+    <div id="navigate">
+        <a href="Transform34.html">Previous</a> | <a href="Transform36.html">Next</a>
+    </div>
+</body>
+</html>

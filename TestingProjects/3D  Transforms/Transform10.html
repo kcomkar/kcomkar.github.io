@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CSS3 3D Transforms & Transitions testsuite</title>
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta http-equiv="Content-Script-Type" content="text/javascript" />
+    <link rel="author" title="K Chandrasekhar Omkar" href="mailto:ext-omkar.chandrasekhar@nokia.com" />
+    <link rel="help" href="http://www.w3.org/TR/css3-3d-transforms/" />
+    <meta name="flags" content="animated dom HTML interact invalid paged mobile" />
+    <meta name="assert" content="To verify support for CSS3 3D Transforms on a mobile browser, having webkit-based browser engine." />
+    <style type="text/css">
+        body
+        {
+            font-family: Consolas;
+            height: 100%;
+            width: 100%;
+            max-height: 640px;
+            max-width: 320px;
+            -webkit-transition: all 1.5s ease-in-out;
+            float: none;
+            overflow: scroll;
+        }
+        #passed
+        {
+            background-color: Green;
+            color: Yellow;
+            font-weight: bolder;
+        }
+        #failed
+        {
+            background-color: Red;
+            color: Yellow;
+            font-weight: bolder;
+        }
+        #assertion
+        {
+            font-weight: bolder;
+            text-decoration: underline;
+        }
+        #eval
+        {
+            font-weight: bolder;
+            text-decoration: underline;
+        }
+        #compareDiv
+        {
+            /* -webkit-transform: translate3d(0em,0em,9em); */
+            -webkit-transform: translateZ(2em);
+            background-color: #009999; 
+            position: fixed;
+            padding-top: 1em;
+            padding-bottom: 1em;
+            margin-left: 1em;
+            
+        }
+        #testdetails
+        {
+            font-family: Consolas;
+            color: Black;
+            font-weight: normal;
+        }
+        .highlight
+        {
+            background-color: #A9D0F5;
+        }
+        #tempdiv
+        {
+            -webkit-perspective: 60;
+            -webkit-transform-style: preserve3d;
+            padding-left: 2em;
+            margin-left: 2em;
+        }
+        .samplediv
+        {
+            border-color: Maroon;
+            border-width: medium;
+            border-style: double;
+            margin-left: 2em;
+            width: 40%;
+            background: gold;
+            -webkit-transform: rotatex(10deg) rotatey(3deg);
+            -webkit-transition: all 1.5s ease-in-out;
+        }
+        
+        .translatedDiv
+        {
+            border-color: Maroon;
+            border-width: medium;
+            border-style: double;
+            margin-left: 2em;
+            width: 40%;
+            background: gold;
+            -webkit-transform: rotatex(10deg) rotatey(3deg) TranslateZ(1.2em);
+            -webkit-transition: all 1.5s ease-in-out;
+        }
+    </style>
+    <script type="text/javascript" language="javascript">
+        var translated = false;
+        function causeTranslate() {
+            if (!translated) {
+                document.getElementById("testarea").className = "translatedDiv";
+                document.getElementById("btn").value = "(Un)Translate";
+            }
+            else {
+                document.getElementById("testarea").className = "samplediv";
+                document.getElementById("btn").value = "Translate";
+            }
+            translated = !translated;
+        }
+    </script>
+</head>
+<body>
+    <div id="testdetails">
+        <p>
+            <span id="assertion">Assertion:</span> To verify the behaviour of "TranslateZ()" as <code>-webkit-transform</code>.
+        </p>
+        <p>
+            <span id="eval">Evaluation Criteria: </span> A Yellow box that is slightly rotated in 3d should be visible. Tapping on <span><input type="button" id="btn" value="Translate" onclick="causeTranslate();" /></span> makes Yellow box to move along third dimension.
+            <ul>
+                <li><span id="passed">PASS</span> if the Yellow box looks like zoomed on "<span class="highlight">translating</span>"; and, upon "<span class="highlight">(Un)Translating</span>" Yellow box unzooms back to it's initial position.</li>
+                <li><span id="failed">FAIL</span> if the output is not as expected.</li>
+            </ul>
+        </p>
+    </div>
+    <!-- /*   Test specific code goes here  */ -->
+    <div id="tempdiv">
+        <div id="testarea" class="samplediv">
+            Test Area for TranslateZ() with values in 'em'.
+        </div>
+    </div>
+    <br /><br />
+    
+    <div id="navigate">
+        <br />
+        <hr />
+        <a href="Transform9.html">Previous</a>  |  <a href="Transform11.html">Next</a>
+    </div>
+</body>
+</html>

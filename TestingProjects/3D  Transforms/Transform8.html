@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CSS3 3D Transforms & Transitions testsuite</title>
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta http-equiv="Content-Script-Type" content="text/javascript" />
+    <link rel="author" title="K Chandrasekhar Omkar" href="mailto:ext-omkar.chandrasekhar@nokia.com" />
+    <link rel="help" href="http://www.w3.org/TR/css3-3d-transforms/" />
+    <meta name="flags" content="animated dom HTML interact invalid paged mobile" />
+    <meta name="assert" content="To verify support for CSS3 3D Transforms on a mobile browser, having webkit-based browser engine." />
+    <style type="text/css">
+        body
+        {
+            font-family: Consolas;
+            height: 100%;
+            width: 100%;
+            max-height: 640px;
+            max-width: 320px;
+            -webkit-transition: all 1.5s ease-in-out;
+            float: none;
+            overflow: scroll;
+        }
+        #passed
+        {
+            background-color: Green;
+            color: Yellow;
+            font-weight: bolder;
+        }
+        #failed
+        {
+            background-color: Red;
+            color: Yellow;
+            font-weight: bolder;
+        }
+        #assertion
+        {
+            font-weight: bolder;
+            text-decoration: underline;
+        }
+        #eval
+        {
+            font-weight: bolder;
+            text-decoration: underline;
+        }
+        #testdetails
+        {
+            font-family: Consolas;
+            color: Black;
+            font-weight: normal;
+        }
+        .highlight
+        {
+            background-color: #A9D0F5;
+        }
+        
+        .samplediv
+        {
+            border-color: Maroon;
+            border-width: medium;
+            border-style: double;
+            width: 40%;
+            background: gold;
+            -webkit-transform: none;
+            -webkit-transition: all 1.5s ease-in-out;
+        }
+        
+        .translatedDiv
+        {
+            border-color: Maroon;
+            border-width: medium;
+            border-style: double;
+            width: 40%;
+            background: gold;
+            -webkit-transform: translateX(4em);
+            -webkit-transition: all 1.5s ease-in-out;
+        }
+    </style>
+    <script type="text/javascript" language="javascript">
+        var translated = false;
+        function causeTranslate() {
+            if (!translated) {
+                document.getElementById("testarea").className = "translatedDiv";
+                document.getElementById("btn").value = "(Un)Translate";
+            }
+            else {
+                document.getElementById("testarea").className = "samplediv";
+                document.getElementById("btn").value = "Translate";
+            }
+            translated = !translated;
+        }
+    </script>
+</head>
+<body>
+    <div id="testdetails">
+        <p>
+            <span id="assertion">Assertion:</span> To verify the behaviour of "TranslateX()" as <code>-webkit-transform</code>.
+        </p>
+        <p>
+            <span id="eval">Evaluation Criteria: </span> Tap on <span><input type="button" id="btn" value="Translate" onclick="causeTranslate();" /></span> to make the box move.
+            <ul>
+                <li><span id="passed">PASS</span> if the box moves towards right upon "<span class="highlight">translating</span>". Also, upon "<span class="highlight">(Un)Translating</span>" it should move back to it's previous position following same trajectory.</li>
+                <li><span id="failed">FAIL</span> if the output is not as expected.</li>
+            </ul>
+        </p>
+    </div>
+    <!-- /*   Test specific code goes here  */ -->
+    <div id="testarea" class="samplediv">
+    Test Area 
+    </div>
+    <div id="navigate">
+        <br />
+        <hr />
+        <a href="Transform7.html">Previous</a>  |  <a href="Transform9.html">Next</a>
+    </div>
+</body>
+</html>

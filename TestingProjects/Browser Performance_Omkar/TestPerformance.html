@@ -1,0 +1,430 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>Browser Performance Validator</title>
+    <link rel="stylesheet" type="text/css" href="style.css" media="all" />
+    <script type="text/javascript" language="javascript">
+        
+        /**
+        * @author K Chandrasekhar Omkar
+        */
+        var model = {
+            "walls": { "left": 0, "top": 0, "right": 500, "bottom": 300 },
+            "elastity": -0.2,
+            "ballRadius": 26,
+            "maxSpeed": 3.0
+        };
+
+        var fps1 = 0; //A variable that captures number of frames per second
+        var nob = 0; //A variable that captures number of balls
+        var bp = 0; //A Variable that captures the position of number of balls in drop down list
+        var fpsdata = new Array(10); //Array holding 10 fps readings
+        var tfps = 0 //A Variable that is used to loop through the array.
+        var balls = new Array(1, 2, 4, 8, 16, 32, 64, 99, 128, 256);
+        var prgValue = 0; //Indicates progress of the test
+        // helper
+        var extend = function (subClass, baseClass) {
+            // Create a new class that has an empty constructor
+            // with the members of the baseClass
+            function inheritance() { };
+            inheritance.prototype = baseClass.prototype;
+
+            // set prototype to new instance of baseClass
+            // _without_ the constructor
+            subClass.prototype = new inheritance();
+            subClass.prototype.constructor = subClass;
+            subClass.baseConstructor = baseClass;
+
+            // enable multiple inheritance
+            if (baseClass.base) {
+                baseClass.prototype.base = baseClass.base;
+            }
+            subClass.base = baseClass.prototype;
+        }
+
+        function resetCustomData() {
+            
+        }
+
+        /**
+        * Base "platform-independent" class representing ball
+        *
+        * @param {Object} x
+        * @param {Object} y
+        * @param {Object} vx
+        * @param {Object} vy
+        */
+        function Ball(x, y, vx, vy) {
+            // default provisioning
+            if (x == undefined) {
+                x = (model.walls.right - model.walls.left - 2 * model.ballRadius) * Math.random();
+                y = (model.walls.bottom - model.walls.top - 2 * model.ballRadius) * Math.random();
+                vx = 2 * model.maxSpeed * Math.random() - model.maxSpeed;
+                vy = 2 * model.maxSpeed * Math.random() - model.maxSpeed;
+            }
+            this._x = x;
+            this._y = y;
+            this._vx = vx;
+            this._vy = vy;
+            this._r = model.ballRadius; // d = 52 px
+            this._d = 2 * this._r;
+            this._d2 = this._d * this._d;
+        }
+
+        Ball.prototype.move = function () {
+            this._x += this._vx;
+            this._y += this._vy;
+            // walls collisons
+
+            // left
+            if (this._x < model.walls.left && this._vx < 0) {
+                //this._vx += (this._x - walls.left)*elastity;
+                this._vx = -this._vx;
+            }
+            // top
+            if (this._y < model.walls.top && this._vy < 0) {
+                //this._vy += (this._y - walls.top)*elastity;
+                this._vy = -this._vy;
+            }
+            // left
+            if (this._x > model.walls.right - this._d && this._vx > 0) {
+                //this._vx += (this._x - walls.right + this._d)*elastity;
+                this._vx = -this._vx;
+            }
+            // top
+            if (this._y > model.walls.bottom - this._d && this._vy > 0) {
+                //this._vy += (this._y - walls.bottom + this._d)*elastity;
+                this._vy = -this._vy;
+            }
+        }
+
+        Ball.prototype.doCollide = function (b) {
+            // calculate some vectors
+            var dx = this._x - b._x;
+            var dy = this._y - b._y;
+            var dvx = this._vx - b._vx;
+            var dvy = this._vy - b._vy;
+            var distance2 = dx * dx + dy * dy;
+
+            if (Math.abs(dx) > this._d || Math.abs(dy) > this._d)
+                return false;
+            if (distance2 > this._d2)
+                return false;
+
+            // make absolutely elastic collision
+            var mag = dvx * dx + dvy * dy;
+
+            // test that balls move towards each other
+            if (mag > 0)
+                return false;
+
+            mag /= distance2;
+
+            var delta_vx = dx * mag;
+            var delta_vy = dy * mag;
+
+            this._vx -= delta_vx;
+            this._vy -= delta_vy;
+
+            b._vx += delta_vx;
+            b._vy += delta_vy;
+
+            return true;
+        }
+
+        /**
+        * Abstract test class
+        *
+        * @param {Object} N
+        */
+        function BallsTest(N) {
+            this._N = N; // number of objects
+            this._ballsO = new Array();
+            this._isRunning = false;
+        }
+
+        BallsTest.prototype._showFPS = null;
+
+        BallsTest.prototype.start = function (N) {
+            if (this._isRunning) {
+                return false;
+            }
+
+            this._isRunning = true;
+
+            if (N != undefined) {
+                this._N = N;
+            }
+
+            this._F = 0;  // frames counter for FPS
+            this._lastF = 0;
+            this._lastTime = new Date();
+            var _this = this;
+
+            var moveBalls = function () {
+                if (_this._N > _this._ballsO.length)
+                    return;
+                _this._F++;
+                // move balls
+                for (var i = 0; i < _this._N; i++) {
+                    _this._ballsO[i].move();
+                }
+                // process collisions
+                for (i = 0; i < _this._N; i++) {
+                    for (j = i + 1; j < _this._N; j++) {
+                        _this._ballsO[i].doCollide(_this._ballsO[j]);
+                    }
+                }
+            }
+            var showFps = function () {
+                if (_this._F - _this._lastF < 10) return;
+                var currTime = new Date();
+                var delta_t = (currTime.getMinutes() - _this._lastTime.getMinutes()) * 60 + currTime.getSeconds() - _this._lastTime.getSeconds() + (currTime.getMilliseconds() - _this._lastTime.getMilliseconds()) / 1000.0;
+
+                delete currTime;
+
+                var fps = (_this._F - _this._lastF) / delta_t;
+
+                _this._lastF = _this._F;
+                _this._lastTime = currTime;
+
+                if (_this._showFPS)
+                    _this._showFPS.call(_this, Math.round(fps));
+            }
+
+            this._int1 = setInterval(moveBalls, 5);
+            this._int2 = setInterval(showFps, 3000);
+            return true;
+        }
+        BallsTest.prototype.stop = function () {
+            if (!this._isRunning) return false;
+            this._isRunning = false;
+            clearInterval(this._int1);
+            clearInterval(this._int2);
+            return true;
+        }
+
+    </script>
+    <script type="text/javascript">
+        /**
+        * @author alex
+        * @requires ball.js
+        */
+
+        /**
+        * DHTML-specific implementation
+        * 
+        * @param {Object} id
+        * @param {Object} x
+        * @param {Object} y
+        * @param {Object} vx
+        * @param {Object} vy
+        */
+        function DHTMLBall(id, x, y, vx, vy) {
+            DHTMLBall.baseConstructor.call(this, x, y, vx, vy);
+            this._id = id;
+            this._elem = document.getElementById(id);
+            this._elem.style.position = "absolute";
+            this._elem.style.display = "block";
+            this.move();
+        }
+        extend(DHTMLBall, Ball);
+
+        DHTMLBall.prototype.move = function () {
+            DHTMLBall.base.move.call(this);
+            this._elem.style.left = this._x + "px";
+            this._elem.style.top = this._y + "px";
+        }
+
+        DHTMLBall.prototype.clone = function (newId) {
+            var newNode = this._elem.cloneNode(true);
+            newNode.id = newId;
+            newNode.style.zIndex = this._elem.style.zIndex + 1;
+            this._elem.parentNode.appendChild(newNode);
+            return new DHTMLBall(newId);
+        }
+    </script>
+</head>
+<!--##################################################################################################################################
+/*
+    Brower's performance is measured with respect to it's rendering capacity. Quality of an animation is determined using "fps" (frames-per-second).
+    Image of a ball is animated in such a way that:
+    1. Upon reaching boundaries of the parent-element, tracjectory takes a curve symmetrically.
+    2. Upon colliding with an another ball, trajectory curve to be changed is calculated based on the point at which balls meet. 
+
+    For every 'n' seconds the number of balls gets doubled. This process continues to run till the number of balls is 128.
+
+    The number of frames per second is captured when the animation is in progress for each set of balls and summarized below.
+*/
+##################################################################################################################################-->
+<body onload="setTimeout('init();', 100);">
+    <div>
+        <h1 align="center">
+            Performance Validator</h1>
+        <span style="font-weight: bolder; text-decoration: underline;">Brower's performance
+        </span>is measured with respect to it's rendering capacity. Quality of an animation
+        is determined using "fps" (frames-per-second). <span id="passedtests" style="background-color: Green;
+            color: yellow; font-weight: bolder;">Higher FPS </span>indicates good performance.
+        <span id="failedtests" style="background-color: Red; color: Silver; font-weight: bolder;">
+            Lower FPS </span>indicates poor performance.
+    </div>
+    <br />
+    <div>
+        Progess:
+        <progress id="prgBar" max="100" value="0"><span id="prgBarVal">0%</span></progress>
+    </div>
+    <div id="dhtml">
+        <div id="dhtmlHost" class="host" onclick="">
+            <p id="dhtml_fps">
+                -- fps</p>
+            <img id="dhtml_ball_0" src="ball.png" alt="O" />
+        </div>
+        <div id="demoControls">
+            <input type="button" onclick="_dhtmlTest.stop(); _dhtmlTest.start(); return false;"
+                value="Start" />
+            |
+            <input type="button" onclick="_dhtmlTest.stop(); return false;" value="Stop" />
+            <select id="ddList" onchange="_dhtmlTest.stop();_dhtmlTest.start(this.value);">
+                <option value="1" selected>1</option>
+                <option value="2">2</option>
+                <option value="4">4</option>
+                <option value="8">8</option>
+                <option value="16">16</option>
+                <option value="32">32</option>
+                <option value="64">64</option>
+                <option value="99">99</option>
+                <option value="128">128</option>
+                <option value="256">256</option>
+            </select>
+        </div>
+        <div style="clear: both;">
+        </div>
+    </div>
+    <table id="myDiv" border="1" style="border-style: double; width: 100%; display: table;">
+        <tr>
+            <td>
+                Number of Balls
+            </td>
+            <td>
+                Maximum FPS
+            </td>
+            <td>
+                Minimum FPS
+            </td>
+            <td>
+                Average FPS
+            </td>
+        </tr>
+    </table>
+    <script type="text/javascript" language="JavaScript">
+        /**
+        * DHTML Balls test
+        * 
+        * @param {Object} N
+        */
+        function DHTMLTest(N) {
+            DHTMLTest.baseConstructor.call(this, N);
+        }
+        extend(DHTMLTest, BallsTest);
+
+        DHTMLTest.prototype.start = function (N) {
+            resetCustomData();
+            if (!DHTMLTest.base.start.call(this, N)) return;
+            this._saveContent = document.getElementById("dhtmlHost").innerHTML;
+
+            this._ballsO[0] = new DHTMLBall("dhtml_ball_0");
+
+            for (var i = 1; i < this._N; i++) {
+                this._ballsO[i] = this._ballsO[0].clone("dhtml_ball_" + i);
+            }
+
+        }
+        DHTMLTest.prototype.stop = function () {
+            if (!DHTMLTest.base.stop.call(this)) return;
+            document.getElementById("dhtmlHost").innerHTML = this._saveContent;
+        }
+        DHTMLTest.prototype._showFPS = function (fps) {
+
+            fps1 = fps;
+
+            if (bp <= 10) {
+                nob = balls[bp];
+                if (tfps < 10) {
+                    fpsdata[tfps] = fps1;
+                    tfps++;
+                    prgValue++;
+                    if (prgValue <= 100) {
+                        try {
+                            document.getElementById("prgBar").value = prgValue;
+                        }
+                        catch (prgNotSupported) {
+                            document.getElementById("prgBarVal").innerHTML = prgValue + '%';
+                            //alert('progress bar tag is not supported\n\n' + prgNotSupported.ToString);
+                        }
+                        try {
+                            document.getElementById("prgBar").innerHTML = '' + prgValue + '%';
+                        }
+                        catch (prgUpdateError) {
+                            document.getElementById("prgBarVal").innerHTML = prgValue + '%';
+                            //alert('progress bar update is not supported\n\n' + prgUpdateError.ToString);
+                        }
+                    }
+
+                }
+                else if (tfps == 10) {
+                    bp++;
+                    var maxfps = fpsdata[0];
+                    var minfps = fpsdata[0];
+                    var avgfps = 0;
+                    for (var i = 0; i < 10; i++) {
+                        avgfps += fpsdata[i];
+                        if (maxfps < fpsdata[i]) {
+                            maxfps = fpsdata[i];
+                        }
+                        if (minfps > fpsdata[i]) {
+                            minfps = fpsdata[i];
+                        }
+                    }
+                    tfps = 0;
+                    var temp = "128";
+                    avgfps = (avgfps / 10);
+                    if (nob < 10) {
+                        temp = "00" + nob;
+                    }
+                    else if (nob > 10 && nob < 100) {
+                        temp = '0' + nob;
+                    }
+
+                    /* document.getElementById("myDiv").innerHTML = document.getElementById("myDiv").innerHTML + "<br> <b>Number of balls:</b> " + temp + "<b>&nbsp&nbsp|&nbsp&nbsp  Max FPS:</b> " + maxfps + " <b>&nbsp&nbsp|&nbsp&nbsp Min FPS:</b> " + minfps + " <b>&nbsp&nbsp|&nbsp&nbsp Average FPS:</b> " + avgfps; */
+
+                    document.getElementById("myDiv").innerHTML = document.getElementById("myDiv").innerHTML + "<tr><td>" + temp + "</td><td>" + maxfps + "</td><td>" + minfps + "</td><td>" + avgfps + "</td></tr>";
+                    document.getElementById("ddList").value = balls[bp];
+                    _dhtmlTest.stop(); _dhtmlTest.start(document.getElementById("ddList").value);
+                }
+            }
+            else if (bp > 10) {
+                _dhtmlTest.stop();
+                window.alert('Completed');
+            }
+
+            document.getElementById("dhtml_fps").innerHTML = fps + " fps";
+
+
+        }
+
+        var _dhtmlTest = new DHTMLTest(1);
+
+
+        function init() {
+            _dhtmlTest.start();
+        }
+    </script>
+    <script src="http://www.google-analytics.com/urchin.js" type="text/javascript" language="javascript">
+    </script>
+    <script type="text/javascript" language="javascript">
+        _uacct = "UA-78143-7";
+        urchinTracker();
+    </script>
+</body>
+</html>

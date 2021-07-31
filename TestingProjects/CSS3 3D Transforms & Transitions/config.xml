@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<widget xmlns="http://www.w3.org/ns/widgets" id="CSSThreeDeeTransforms" version="1.0">
+        
+  <name>CSS3 3D Transform Tests</name>
+  
+  <icon src="icon.png" />
+  
+  <content src="index.html" />
+  
+</widget> 

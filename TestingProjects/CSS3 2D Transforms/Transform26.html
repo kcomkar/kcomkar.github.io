@@ -1,0 +1,102 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <!-- ################################################################################################################### -->
+    <title>CSS3 2D Transforms - QtWRT 101</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta http-equiv="Content-Script-Type" content="text/javascript" />
+    <link rel="author" title="K Chandrasekhar Omkar" href="mailto:ext-omkar.chandrasekhar@nokia.com" />
+    <link rel="help" href="http://www.w3.org/TR/css3-2d-transforms/" />
+    <link rel="Index" type="text/html" href="index.html" />
+    <meta name="flags" content="animated dom HTML interact invalid paged mobile" />
+    <meta name="assert" content="To verify support for CSS3 2D Transforms on a mobile browser, having webkit-based browser engine." />
+    <!-- ################################################################################################################### -->
+    <script type="text/javascript" language="javascript" src="scripts/testscripts.js"></script>
+    <link rel="stylesheet" type="text/css" href="styles/testheaders.css" />
+    <!-- ################################################################################################################### -->
+    <style type="text/css">
+        /* 
+        <!-- 
+                This style sections contains only test-specific content. All the common style sheets are contained in "styles/testheaders.css"
+        --> 
+        */ 
+        .transformReferenceDiv
+        {
+            margin: 1em 1em 1em 1em;
+            padding: 0.5em 0.5em 0.5em 0.5em;
+            background-color: #09C;
+            -webkit-transform-style: preserve-3d;
+            -webkit-perspective: 20;
+        }
+        
+        .noTransformDiv
+        {
+            margin: 1.5em 1em 1em 1.5em;
+            padding: 0.7em 0.7em 0.7em 0.7em;
+            border-color: Maroon;
+            border-width: medium;
+            border-style: double;
+            font-size: 100%;
+            width: 40%;
+            background-color: #FCF;
+            -webkit-transform: none;
+            -webkit-transition: all 5s ease-in-out;
+        }
+        
+        .transformedDiv
+        {
+            margin: 3em 3em 3em 3em;
+            padding: 0.7em 0.7em 0.7em 0.7em;
+            border-color: Maroon;
+            border-width: medium;
+            border-style: double;
+            font-size: 100%;
+            width: 40%;
+            background-color: #FCF;
+            -webkit-transform: scale(0.5) rotatex(2880deg) scale(1.5) translatex(4em) translatey(4em) rotatey(-2880deg) translate(-4em,-4em) skew(-10deg,-10deg) scale(1.3) rotatex(720deg) skew(10deg,10deg) rotatey(-720deg) scale(1.8);
+            -webkit-transition: all 8s ease-in-out;
+        }
+    </style>
+    <script type="text/javascript" language="javascript">
+        /*
+            <!--
+                This script sections contains only test-specific content. All the common scripts are contained in "styles/testscripts.js"
+            --> 
+        */
+    </script>
+    
+</head>
+<body>
+    <div id="testdetails">
+        <div>
+            <span id="assertion">Assertion:</span> To verify if "<code>-webkit-transform</code>" works as expected when a multiple-combination of transforms are applied.
+        </div>
+        <div>
+            <br />
+            <span id="eval">Evaluation Criteria:</span> 
+            Tapping 
+            <!-- You may uncomment the next comment to make a button visible inline to the assertion -->
+            <span>
+                <input type="button" id="transformBtn" value="Transform" onclick="applyTransform();" />
+            </span>
+             applies transform on Pink box below.
+            <!-- PASS AND FAIL CRITERIA ARE IN THE LIST BELOW -->
+            <ul>
+                <li><span id="passed">PASS</span> if the box undergoes a number of transforms such that it is felt like it's trying to rotate, move & zoom. However, it looks like zoomed finally upon applying <span class="highlight">Transform</span>. Later it looks to become <span class="highlighted">normal</span> similar to it's initial position upon applying <span class="highlight">(Un)transform</span>.</li>
+                <li><span id="failed">FAIL</span> if the output is not as expected.</li>
+            </ul>
+        </div>
+        <hr />
+    </div>
+    <!-- PLACE TEST CONTENT FROM HERE -->
+    <div id="testarea" class="noTransformDiv">
+        Test area for <code>-webkit-transform</code> using multiple transforms.
+    </div>
+    <div id="navigation">
+        <table id="navTable">
+            <tr><td id="previous"><a href="Transform25.html">Previous</a></td><td id="next"><a href="index.html">Next</a></td></tr>
+        </table>
+    </div>
+</body>
+</html>
