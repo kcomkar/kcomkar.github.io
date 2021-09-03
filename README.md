@@ -1,5 +1,6 @@
-<h1 style="align:center">Welcome to Omkar's blog & Projects</h1>
+<h1 style="align:center">Welcome to <u>K Chandrasekhar Omkar</u>'s blog & Projects</h1>
 
+<!-- /*
 <div style="align:center">
 			<table>
 				<tr><td style="text-align: center;"><canvas id="canvas_tt5f9c235e959d4" width="175" height="175"></canvas></td></tr>
@@ -15,3 +16,7 @@
           </table>
 
 </div>
+
+*/ -->
+
+Please refer to 
