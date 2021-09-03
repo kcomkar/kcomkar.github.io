@@ -19,4 +19,4 @@
 
 */ -->
 
-Please refer to 
+<p>Please refer to https://www.github.io/kcomkar for the list of projects. </p>
